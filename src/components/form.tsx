@@ -1,9 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
+import { useTasks } from '../hooks/useTask';
+import { Task } from '../context/task';
 import { Input, InputField } from './ui/input';
 import { Button, ButtonIcon } from './ui/button';
 import { AddIcon, AlertCircleIcon } from './ui/icon';
 import { Text } from './ui/text';
+import * as z from 'zod';
+import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
 	FormControl,
 	FormControlError,
@@ -11,13 +16,28 @@ import {
 	FormControlErrorText,
 } from './ui/form-control';
 
-const TaskForm: React.FC<{ add: (task: any) => void }> = ({ add }) => {
-	function handleNewTask() {
-		add({
+const taskSchema = z.object({
+	description: z.string().min(3, 'Descrição é obrigatório'),
+});
+export type TaskFormData = z.infer<typeof taskSchema>;
+
+const TaskForm: React.FC = () => {
+	const { add } = useTasks();
+
+	const taskForm = useForm<TaskFormData>({
+		resolver: zodResolver(taskSchema),
+	});
+
+	const { handleSubmit, reset, formState, control } = taskForm;
+
+	function handleNewTask({ description }: TaskFormData) {
+		const newTask: Task = {
 			id: new Date().getTime().toString(),
-			description: 'new tas',
+			description,
 			done: false,
-		});
+		} as Task;
+		add(newTask);
+		reset();
 	}
 
 	return (
@@ -26,24 +46,39 @@ const TaskForm: React.FC<{ add: (task: any) => void }> = ({ add }) => {
 				Nova tarefa
 			</Text>
 			<View className="flex-row items-start gap-3">
-				<FormControl
-					className="flex-1"
-					isInvalid={true}
-					isRequired={false}>
-					<Input className="border-tertiary-100" size="lg">
-						<InputField placeholder="Descrição da tarefa" />
-					</Input>
-					<FormControlError>
-						<FormControlErrorIcon as={AlertCircleIcon} />
-						<FormControlErrorText>
-							Mensagem de erro
-						</FormControlErrorText>
-					</FormControlError>
-				</FormControl>
+				<Controller
+					control={control}
+					name="description"
+					render={({ field: { onChange, value } }) => (
+						<FormControl
+							className="flex-1"
+							isInvalid={!!formState.errors.description}
+							isRequired={false}>
+							<Input className="border-tertiary-100" size="lg">
+								<InputField
+									placeholder="Descrição da tarefa"
+									onChangeText={onChange}
+									value={value}
+								/>
+							</Input>
+							{formState.errors.description && (
+								<FormControlError>
+									<FormControlErrorIcon
+										as={AlertCircleIcon}
+									/>
+									<FormControlErrorText>
+										{formState.errors.description.message}
+									</FormControlErrorText>
+									res
+								</FormControlError>
+							)}
+						</FormControl>
+					)}
+				/>
 				<Button
 					size="lg"
 					className="position-fixed rounded-full p-3.5"
-					onPress={handleNewTask}>
+					onPress={handleSubmit(handleNewTask)}>
 					<ButtonIcon as={AddIcon} />
 				</Button>
 			</View>

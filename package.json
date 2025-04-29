@@ -17,15 +17,18 @@
     "@gluestack-ui/nativewind-utils": "^1.0.26",
     "@gluestack-ui/overlay": "^0.1.22",
     "@gluestack-ui/toast": "^1.0.9",
+    "@hookform/resolvers": "^5.0.1",
     "expo": "^52.0.46",
     "nativewind": "^4.1.23",
     "react": "19.0.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.56.1",
     "react-native": "0.79.1",
     "react-native-reanimated": "^3.17.5",
     "react-native-safe-area-context": "^5.4.0",
     "react-native-svg": "^15.11.2",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

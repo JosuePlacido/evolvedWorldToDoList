@@ -4,6 +4,7 @@ import './global.css';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Home from './src/screens/home';
 import { GluestackUIProvider } from './src/components/ui/gluestack-ui-provider';
+import { TaskContextProvider } from './src/context/task';
 
 function App(): React.JSX.Element {
 	const isDarkMode = useColorScheme() === 'dark';
@@ -19,7 +20,9 @@ function App(): React.JSX.Element {
 					barStyle={isDarkMode ? 'light-content' : 'dark-content'}
 					backgroundColor={backgroundStyle.backgroundColor}
 				/>
-				<Home />
+				<TaskContextProvider>
+					<Home />
+				</TaskContextProvider>
 			</View>
 		</GluestackUIProvider>
 	);

@@ -1,5 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
+import { Task } from '../context/task';
+import { useTasks } from '../hooks/useTask';
 import { Button, ButtonIcon } from './ui/button';
 import {
 	CheckCircleIcon,
@@ -10,25 +12,15 @@ import {
 } from './ui/icon';
 import { Text } from './ui/text';
 
-const TaskCard: React.FC<{
-	id: string;
-	description: string;
-	done: boolean;
-}> = ({
-	id,
-	description,
-	done,
-}: {
-	id: string;
-	description: string;
-	done: boolean;
-}) => {
+const TaskCard: React.FC<Task> = ({ id, description, done }: Task) => {
+	const { doneUndone, remove } = useTasks();
+
 	return (
 		<View className="m-1 flex-1 align-items-center">
 			<Button
 				variant="solid"
 				className="p-2 h-full bg-red-500 absolute w-[30%] right-[10px]"
-				onPress={() => {}}>
+				onPress={() => remove(id)}>
 				<ButtonIcon as={TrashIcon} />
 			</Button>
 			<View className="p-3 gap-2 flex-row bg-secondary-200 align-items-center border border-tertiary-600 rounded-lg">
@@ -37,7 +29,7 @@ const TaskCard: React.FC<{
 					action="positive"
 					size="lg"
 					className={'rounded-full flex-1'}
-					onPress={() => {}}>
+					onPress={() => doneUndone(id)}>
 					{done ? (
 						<ButtonIcon
 							size="xl"
