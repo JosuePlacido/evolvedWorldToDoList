@@ -1,22 +1,28 @@
 import React from 'react';
-import { Text, View, StatusBar } from 'react-native';
-import { Text as GluestackText } from './src/components/ui/text';
+import { StatusBar, useColorScheme, View } from 'react-native';
 import './global.css';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import Home from './src/screens/home';
 import { GluestackUIProvider } from './src/components/ui/gluestack-ui-provider';
-const App = () => {
+
+function App(): React.JSX.Element {
+	const isDarkMode = useColorScheme() === 'dark';
+
+	const backgroundStyle = {
+		backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+	};
+
 	return (
 		<GluestackUIProvider>
-			<View className="flex-1 items-center justify-center bg-white dark:bg-black">
-				<StatusBar barStyle="dark-content" />
-				<Text className="text-2xl font-bold text-gray-800 dark:text-white">
-					Nativewind instalado! 👋
-				</Text>
-				<GluestackText size="5xl" className="text-center">
-					Texto do gluestack
-				</GluestackText>
+			<View className="flex-1">
+				<StatusBar
+					barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+					backgroundColor={backgroundStyle.backgroundColor}
+				/>
+				<Home />
 			</View>
 		</GluestackUIProvider>
 	);
-};
+}
 
 export default App;
