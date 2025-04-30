@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+apply plugin: 'com.google.gms.google-services'
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -77,9 +78,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.evolvedworldtodo"
+    namespace "com.josueplacido.evolvedtodo"
     defaultConfig {
-        applicationId "com.evolvedworldtodo"
+        applicationId "com.josueplacido.evolvedtodo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -92,17 +93,24 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+		release {
+			if (project.hasProperty('EvolvedTODO_UPLOAD_STORE_FILE')) {
+				storeFile file(EvolvedTODO_UPLOAD_STORE_FILE)
+				storePassword EvolvedTODO_UPLOAD_STORE_PASSWORD
+				keyAlias EvolvedTODO_UPLOAD_KEY_ALIAS
+				keyPassword EvolvedTODO_UPLOAD_KEY_PASSWORD
+			}
+		}
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        signingConfig signingConfigs.release
+        minifyEnabled false
+        shrinkResources false
+        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -116,4 +124,5 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+	implementation 'com.google.firebase:firebase-analytics'
 }

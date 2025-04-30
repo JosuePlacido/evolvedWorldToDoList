@@ -1,4 +1,4 @@
-package com.evolvedworldtodo
+package com.josueplacido.evolvedtodo
 
 import android.app.Application
 import com.facebook.react.PackageList

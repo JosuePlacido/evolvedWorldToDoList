@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "773190108674",
+    "project_id": "test-44a4e",
+    "storage_bucket": "test-44a4e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773190108674:android:eec49de2db0105de83891b",
+        "android_client_info": {
+          "package_name": "com.josueplacido.evolvedtodo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwKkinrJquLF-g0q1A53rVFccgpQfgxqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

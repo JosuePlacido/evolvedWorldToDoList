@@ -18,6 +18,8 @@
     "@gluestack-ui/overlay": "^0.1.22",
     "@gluestack-ui/toast": "^1.0.9",
     "@hookform/resolvers": "^5.0.1",
+    "@react-native-firebase/app": "^22.1.0",
+    "@react-native-firebase/firestore": "^22.1.0",
     "expo": "^52.0.46",
     "nativewind": "^4.1.23",
     "react": "19.0.0",
