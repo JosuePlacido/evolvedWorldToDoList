@@ -17,7 +17,7 @@ import {
 } from './ui/form-control';
 
 const taskSchema = z.object({
-	description: z.string().min(3, 'Descrição é obrigatório'),
+	description: z.string().min(1, 'Descrição é obrigatório'),
 });
 export type TaskFormData = z.infer<typeof taskSchema>;
 
@@ -26,6 +26,9 @@ const TaskForm: React.FC = () => {
 
 	const taskForm = useForm<TaskFormData>({
 		resolver: zodResolver(taskSchema),
+		defaultValues: {
+			description: '',
+		},
 	});
 
 	const { handleSubmit, reset, formState, control } = taskForm;
@@ -69,7 +72,6 @@ const TaskForm: React.FC = () => {
 									<FormControlErrorText>
 										{formState.errors.description.message}
 									</FormControlErrorText>
-									res
 								</FormControlError>
 							)}
 						</FormControl>
